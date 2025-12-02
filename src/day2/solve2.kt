@@ -1,19 +1,21 @@
 package day2
 import java.io.File
 
-fun isInvalid(productId: Long): Boolean {
+
+fun isInvalid2(productId: Long): Boolean {
     val idString = productId.toString()
     val len = idString.length
 
-    if (len % 2 == 1) return false
+    for (i in 1.. len / 2) {
+        if (len % i != 0) continue
 
-    val left = idString.substring(0, len / 2)
-    val right = idString.substring(len / 2)
-
-    return left == right
+        val pattern = idString.substring(0, i)
+        if (pattern.repeat(len / i) == idString) return true
+    }
+    return false
 }
 
-fun solve(file: String): Long {
+fun solve2(file: String): Long {
     var idSum = 0L
     val lines = File(file).readLines()
 
@@ -24,7 +26,7 @@ fun solve(file: String): Long {
             val start = startString.toLong()
             val end = endString.toLong()
             for (productId in start..end) {
-                if (isInvalid(productId)) {
+                if (isInvalid2(productId)) {
                     idSum += productId
                 }
             }
@@ -34,6 +36,6 @@ fun solve(file: String): Long {
 }
 
 fun main(args: Array<String>) {
-//    println("the answer = " + solve("src/day2/sample.txt"))
-    println("the answer = " + solve("src/day2/input.txt"))
+//    println("the answer = " + solve2("src/day2/sample.txt"))
+    println("the answer = " + solve2("src/day2/input.txt"))
 }
