@@ -3,12 +3,12 @@ import kotlin.io.path.Path
 import kotlin.io.path.createDirectory
 
 fun solveFile(day: Int): String {
-    return """package day${day}
+    return """package day${day}.a
 
 import java.io.File
 
 fun solve(file: String): Long {
-    val result = 0L
+    var result = 0L
     val lines = File(file).readLines()
 
     lines.forEach { line ->
@@ -26,8 +26,10 @@ fun main(args: Array<String>) {
 fun main() {
     for (day in 3..12) {
         Path("src/day$day").createDirectory()
+        Path("src/day$day/a").createDirectory()
+        Path("src/day$day/b").createDirectory()
         File("src/day${day}/sample.txt").createNewFile()
         File("src/day${day}/input.txt").createNewFile()
-        File("src/day${day}/solve.kt").writeText(solveFile(day))
+        File("src/day${day}/a/solve.kt").writeText(solveFile(day))
     }
 }
