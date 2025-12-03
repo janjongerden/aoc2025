@@ -11,7 +11,7 @@ fun solve(file: String): Long {
     return result
 }
 
-fun main(args: Array<String>) {
+fun main() {
     println("the answer = " + solve("src/day4/sample.txt"))
 //    println("the answer = " + solve("src/day4/input.txt"))
 }

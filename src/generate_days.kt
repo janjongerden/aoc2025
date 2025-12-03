@@ -16,7 +16,7 @@ fun solve(file: String): Long {
     return result
 }
 
-fun main(args: Array<String>) {
+fun main() {
     println("the answer = " + solve("src/day${day}/sample.txt"))
 //    println("the answer = " + solve("src/day${day}/input.txt"))
 }
@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
 }
 
 fun main() {
-    for (day in 3..12) {
+    for (day in 4..12) {
         Path("src/day$day").createDirectory()
         Path("src/day$day/a").createDirectory()
         Path("src/day$day/b").createDirectory()
