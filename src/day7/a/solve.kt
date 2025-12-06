@@ -2,9 +2,19 @@ package day7.a
 
 import java.io.File
 
-fun solve(file: String): Long {
+var lines: List<String> = emptyList()
+
+var height = -1
+var width = -1
+
+fun readInput(file: String) {
+    lines = File(file).readLines()
+    height = lines.size
+    width = lines[0].length
+}
+
+fun solve(): Long {
     var result = 0L
-    val lines = File(file).readLines()
 
     lines.forEach { line ->
     }
@@ -12,6 +22,8 @@ fun solve(file: String): Long {
 }
 
 fun main() {
-    println("the answer = " + solve("src/day7/sample.txt"))
-//    println("the answer = " + solve("src/day7/input.txt"))
+    readInput("src/day7/sample.txt")
+//    readInput("src/day7/input.txt")
+
+    println("the answer = " + solve())
 }
