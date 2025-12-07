@@ -1,4 +1,4 @@
-package day7.a
+package day7.b
 
 import java.io.File
 
@@ -28,27 +28,31 @@ fun readInput(file: String) {
 fun solve(): Long {
     var result = 0L
 
+    val pathCounter: Array<Long> = Array(width) {0L}
+    pathCounter[lines[0].indexOfFirst { it == '|' }] = 1L
 
     for (y in 1..height - 1) {
-        val splitPositions = mutableSetOf<Int>()
         val line = lines[y]
         for (x in 0..width - 1) {
             val char = line[x]
+
             val isBeam = lines[y - 1][x] == '|'
-            if (char == '^') {
-                if (isBeam) {
+            if (isBeam) {
+                if (char == '^') {
                     line[x - 1] = '|'
                     line[x + 1] = '|'
-                    splitPositions.add(x)
+                    val oldPathCount = pathCounter[x]
+                    pathCounter[x] = 0L
+                    pathCounter[x - 1] += oldPathCount
+                    pathCounter[x + 1] += oldPathCount
+                } else {
+                    line[x] = '|'
                 }
-            } else if (isBeam) {
-                line[x] = '|'
             }
         }
-        result += splitPositions.size
     }
 
-    return result
+    return pathCounter.sum()
 }
 
 fun main() {
