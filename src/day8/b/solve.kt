@@ -1,4 +1,4 @@
-package day8.a
+package day8.b
 
 import java.io.File
 import java.util.*
@@ -35,8 +35,19 @@ fun readInput(file: String) {
     }
 }
 
+fun allBoxesConnected(): Boolean {
+    val id = boxes[0].networkId
+    boxes.forEachIndexed { index, box ->
+        if (index > 0) {
+            if (box.networkId != id) {
+                return false
+            }
+        }
+    }
+    return true
+}
+
 fun solve(): Long {
-    var result = 0L
     var networkCount = 0
 
     val distances: MutableMap<Double, Pair<Box, Box>> = TreeMap<Double, Pair<Box, Box>>()
@@ -48,9 +59,7 @@ fun solve(): Long {
             }
         }
     }
-    val n = 1000
-    val firstN = distances.entries.take(n)
-    firstN.forEach { entry ->
+    for (entry in distances.entries) {
         val (box1, box2) = entry.value
         if (box1.networkId == -1 && box2.networkId == -1) {
             // new network
@@ -67,20 +76,11 @@ fun solve(): Long {
                 networkMerge(box1.networkId, box2.networkId)
             }
         }
-    }
-    val networkSizes: MutableList<Int> = mutableListOf()
-    for (networkId in 0..networkCount) {
-        var count = 0
-        for (box in boxes) {
-            if (box.networkId == networkId) {
-                count++
-            }
+        if (allBoxesConnected()) {
+            return box1.x * box2.x
         }
-        networkSizes.add(count)
     }
-    networkSizes.sort()
-    val top3 = networkSizes.reversed().take(3)
-    return (top3[0] * top3[1] * top3[2]).toLong()
+    return -1L
 }
 
 fun networkMerge(oldId: Int, newId: Int) {
